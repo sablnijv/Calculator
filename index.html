@@ -7,34 +7,59 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="calculator">
-        <div class="display">
-            <input type="text" id="screen" readonly>
-        </div>
-        <div class="buttons">
-            <button class="btn clear" onclick="clearScreen()">C</button>
-            <button class="btn clear" onclick="clearEntry()">CE</button>
-            <button class="btn operator" onclick="deleteLast()">⌫</button>
-            <button class="btn operator" onclick="appendToScreen('/')">/</button>
-            
-            <button class="btn number" onclick="appendToScreen('7')">7</button>
-            <button class="btn number" onclick="appendToScreen('8')">8</button>
-            <button class="btn number" onclick="appendToScreen('9')">9</button>
-            <button class="btn operator" onclick="appendToScreen('*')">×</button>
-            
-            <button class="btn number" onclick="appendToScreen('4')">4</button>
-            <button class="btn number" onclick="appendToScreen('5')">5</button>
-            <button class="btn number" onclick="appendToScreen('6')">6</button>
-            <button class="btn operator" onclick="appendToScreen('-')">-</button>
-            
-            <button class="btn number" onclick="appendToScreen('1')">1</button>
-            <button class="btn number" onclick="appendToScreen('2')">2</button>
-            <button class="btn number" onclick="appendToScreen('3')">3</button>
-            <button class="btn operator" onclick="appendToScreen('+')">+</button>
-            
-            <button class="btn number zero" onclick="appendToScreen('0')">0</button>
-            <button class="btn number" onclick="appendToScreen('.')">.</button>
-            <button class="btn equals" onclick="calculate()">=</button>
+    <div class="reflection-wrapper">
+        <div class="calculator">
+            <div class="display">
+                <input type="text" id="screen" readonly>
+            </div>
+            <div class="buttons">
+                <!-- First row: Clear and scientific functions -->
+                <button class="btn clear" onclick="clearScreen()">C</button>
+                <button class="btn clear" onclick="clearEntry()">CE</button>
+                <button class="btn operator" onclick="deleteLast()">⌫</button>
+                <button class="btn operator" onclick="appendToScreen('/')">/</button>
+                
+                <!-- Second row: Scientific functions -->
+                <button class="btn function" onclick="calculateFunction('sqrt')">√</button>
+                <button class="btn function" onclick="calculateFunction('pow')">x²</button>
+                <button class="btn function" onclick="calculateFunction('powTen')">10ˣ</button>
+                <button class="btn operator" onclick="appendToScreen('*')">×</button>
+                
+                <!-- Third row: More scientific functions -->
+                <button class="btn function" onclick="calculateFunction('sin')">sin</button>
+                <button class="btn function" onclick="calculateFunction('cos')">cos</button>
+                <button class="btn function" onclick="calculateFunction('tan')">tan</button>
+                <button class="btn operator" onclick="appendToScreen('-')">-</button>
+                
+                <!-- Fourth row: Additional scientific functions -->
+                <button class="btn function" onclick="calculateFunction('log')">log</button>
+                <button class="btn function" onclick="calculateFunction('ln')">ln</button>
+                <button class="btn function" onclick="calculateFunction('factorial')">x!</button>
+                <button class="btn operator" onclick="appendToScreen('+')">+</button>
+                
+                <!-- Fifth row: Numbers and basic operations -->
+                <button class="btn number" onclick="appendToScreen('7')">7</button>
+                <button class="btn number" onclick="appendToScreen('8')">8</button>
+                <button class="btn number" onclick="appendToScreen('9')">9</button>
+                <button class="btn function" onclick="calculateFunction('pi')">π</button>
+                
+                <!-- Sixth row -->
+                <button class="btn number" onclick="appendToScreen('4')">4</button>
+                <button class="btn number" onclick="appendToScreen('5')">5</button>
+                <button class="btn number" onclick="appendToScreen('6')">6</button>
+                <button class="btn function" onclick="calculateFunction('e')">e</button>
+                
+                <!-- Seventh row -->
+                <button class="btn number" onclick="appendToScreen('1')">1</button>
+                <button class="btn number" onclick="appendToScreen('2')">2</button>
+                <button class="btn number" onclick="appendToScreen('3')">3</button>
+                <button class="btn function" onclick="toggleSign()">±</button>
+                
+                <!-- Eighth row -->
+                <button class="btn number zero" onclick="appendToScreen('0')">0</button>
+                <button class="btn number" onclick="appendToScreen('.')">.</button>
+                <button class="btn equals" onclick="calculate()">=</button>
+            </div>
         </div>
     </div>
     

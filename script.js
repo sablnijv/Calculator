@@ -81,6 +81,93 @@ function calculate() {
     }
 }
 
+function calculateFunction(func) {
+    try {
+        const value = parseFloat(screen.value);
+        let result;
+        
+        switch(func) {
+            case 'sqrt':
+                if (value < 0) {
+                    throw new Error('Cannot calculate square root of negative number');
+                }
+                result = Math.sqrt(value);
+                break;
+            case 'pow':
+                result = Math.pow(value, 2);
+                break;
+            case 'powTen':
+                result = Math.pow(10, value);
+                break;
+            case 'sin':
+                result = Math.sin(value * Math.PI / 180); // Convert to radians
+                break;
+            case 'cos':
+                result = Math.cos(value * Math.PI / 180); // Convert to radians
+                break;
+            case 'tan':
+                result = Math.tan(value * Math.PI / 180); // Convert to radians
+                break;
+            case 'log':
+                if (value <= 0) {
+                    throw new Error('Cannot calculate logarithm of non-positive number');
+                }
+                result = Math.log10(value);
+                break;
+            case 'ln':
+                if (value <= 0) {
+                    throw new Error('Cannot calculate natural logarithm of non-positive number');
+                }
+                result = Math.log(value);
+                break;
+            case 'factorial':
+                if (value < 0 || !Number.isInteger(value)) {
+                    throw new Error('Factorial is only defined for non-negative integers');
+                }
+                result = factorial(value);
+                break;
+            case 'pi':
+                result = Math.PI;
+                break;
+            case 'e':
+                result = Math.E;
+                break;
+        }
+        
+        // Handle decimal precision
+        if (result % 1 !== 0) {
+            result = parseFloat(result.toFixed(10));
+        }
+        
+        screen.value = result;
+        shouldResetScreen = true;
+    } catch (error) {
+        screen.value = 'Error';
+        shouldResetScreen = true;
+    }
+}
+
+function factorial(n) {
+    if (n === 0 || n === 1) {
+        return 1;
+    }
+    let result = 1;
+    for (let i = 2; i <= n; i++) {
+        result *= i;
+    }
+    return result;
+}
+
+function toggleSign() {
+    if (screen.value !== '0') {
+        if (screen.value.startsWith('-')) {
+            screen.value = screen.value.substring(1);
+        } else {
+            screen.value = '-' + screen.value;
+        }
+    }
+}
+
 // Keyboard support
 document.addEventListener('keydown', function(event) {
     const key = event.key;
@@ -102,5 +189,48 @@ document.addEventListener('keydown', function(event) {
         deleteLast();
     } else if (key === 'Delete') {
         clearEntry();
+    } else if (key === 's' || key === 'S') {
+        calculateFunction('sqrt');
+    } else if (key === 'p' || key === 'P') {
+        calculateFunction('pow');
+    } else if (key === 'l' || key === 'L') {
+        calculateFunction('log');
+    } else if (key === 'n' || key === 'N') {
+        calculateFunction('ln');
     }
+});
+
+// Add 3D tilt effect and reflection
+document.addEventListener('DOMContentLoaded', function() {
+    const buttons = document.querySelectorAll('.btn');
+    
+    // Add reflection effect on buttons
+    buttons.forEach(button => {
+        button.addEventListener('mousemove', function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            this.style.background = `
+                radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.2) 0%, transparent 70%),
+                ${getComputedStyle(this).background}
+            `;
+        });
+        
+        button.addEventListener('mouseleave', function() {
+            // Reset to original background
+            this.style.background = '';
+            if (this.classList.contains('number')) {
+                this.style.background = 'linear-gradient(145deg, #2a2a4a, #1a1a3a)';
+            } else if (this.classList.contains('operator')) {
+                this.style.background = 'linear-gradient(145deg, #4a2a5a, #3a1a4a)';
+            } else if (this.classList.contains('function')) {
+                this.style.background = 'linear-gradient(145deg, #2a4a4a, #1a3a3a)';
+            } else if (this.classList.contains('equals')) {
+                this.style.background = 'linear-gradient(145deg, #2a4a6a, #1a3a5a)';
+            } else if (this.classList.contains('clear')) {
+                this.style.background = 'linear-gradient(145deg, #5a2a3a, #4a1a2a)';
+            }
+        });
+    });
 });
